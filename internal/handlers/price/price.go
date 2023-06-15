@@ -34,7 +34,7 @@ func GetPricesByAsset(c *fiber.Ctx) error {
 		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Asset not found", "data": nil})
 	}
 
-	db.Find(&prices, "asset = ?", asset.ID)
+	db.Find(&prices, "assetId = ?", asset.ID)
 	if len(prices) == 0 {
 		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Prices for this asset not found", "data": nil})
 	}
