@@ -2,6 +2,7 @@ package priceHandler
 
 import (
 	"time"
+    "fmt"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -33,8 +34,9 @@ func GetPricesByAsset(c *fiber.Ctx) error {
 	if asset.ID == 0 {
 		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Asset not found", "data": nil})
 	}
+    fmt.Println(asset.ID)
 
-	db.Find(&prices, "assetId = ?", asset.ID)
+	db.Find(&prices, "asset_id = ?", asset.ID)
 	if len(prices) == 0 {
 		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Prices for this asset not found", "data": nil})
 	}
