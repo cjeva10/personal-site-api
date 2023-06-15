@@ -10,8 +10,8 @@ import (
 )
 
 func GetPrices(c *fiber.Ctx) error {
-	db := database.DB 
-    var prices []model.Price
+	db := database.DB
+	var prices []model.Price
 
 	db.Find(&prices)
 
@@ -25,14 +25,14 @@ func GetPrices(c *fiber.Ctx) error {
 func GetPricesByAsset(c *fiber.Ctx) error {
 	db := database.DB
 	var prices []model.Price
-    var asset model.Asset
+	var asset model.Asset
 
 	symbol := c.Params("assetSymbol")
 
-    db.Find(&asset, "symbol = ?", symbol)
-    if asset.ID == 0 {
+	db.Find(&asset, "symbol = ?", symbol)
+	if asset.ID == 0 {
 		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Asset not found", "data": nil})
-    }
+	}
 
 	db.Find(&prices, "asset = ?", asset.ID)
 	if len(prices) == 0 {
@@ -44,10 +44,10 @@ func GetPricesByAsset(c *fiber.Ctx) error {
 
 func UpdatePrice(c *fiber.Ctx) error {
 	type updatePrice struct {
-		Asset    uint
-		Exchange uint 
-		Datetime time.Time
-		Value    float64
+		AssetId    uint
+		ExchangeId uint
+		Datetime   time.Time
+		Value      float64
 	}
 
 	db := database.DB
@@ -67,10 +67,10 @@ func UpdatePrice(c *fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"status": "error", "message": "Review your input", "data": err})
 	}
 
-    price.Asset = updatePriceData.Asset
-    price.Exchange = updatePriceData.Exchange
-    price.Datetime = updatePriceData.Datetime
-    price.Value = updatePriceData.Value
+	price.AssetId = updatePriceData.AssetId
+	price.ExchangeId = updatePriceData.ExchangeId
+	price.Datetime = updatePriceData.Datetime
+	price.Value = updatePriceData.Value
 
 	db.Save(&price)
 
