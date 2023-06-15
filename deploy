@@ -1,0 +1,9 @@
+#!/bin/sh
+
+USER=root
+HOST=chrisevanko.com
+DIR=/var/www/api
+
+rsync -avz --delete . ${USER}@${HOST}:${DIR}
+
+exit 0
