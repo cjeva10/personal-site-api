@@ -29,8 +29,8 @@ type Asset struct {
 
 type Price struct {
 	Model
-	Asset    uint
-	Exchange uint
+	AssetId    uint
+	ExchangeId uint
 	Datetime time.Time
 	Value    float64
 }
