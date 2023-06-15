@@ -11,7 +11,7 @@ func SetupPriceRoutes(router fiber.Router) {
     price.Get("/", priceHandler.GetPrices)
     
     price.Get("/:assetSymbol", priceHandler.GetPricesByAsset)
-    price.Get("/:assetSymbol/:startDate?/:endDate?", priceHandler.GetPricesWithinDateRange)
+    price.Get("/:assetSymbol/:startDate?to:endDate?", priceHandler.GetPricesWithinDateRange)
 
     price.Put("/:priceId", priceHandler.UpdatePrice)
 
