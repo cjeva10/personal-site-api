@@ -2,7 +2,6 @@ package priceHandler
 
 import (
 	"time"
-    "fmt"
 
 	"github.com/gofiber/fiber/v2"
 
