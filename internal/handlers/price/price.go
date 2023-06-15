@@ -34,7 +34,6 @@ func GetPricesByAsset(c *fiber.Ctx) error {
 	if asset.ID == 0 {
 		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Asset not found", "data": nil})
 	}
-    fmt.Println(asset.ID)
 
 	db.Find(&prices, "asset_id = ?", asset.ID)
 	if len(prices) == 0 {
@@ -42,6 +41,41 @@ func GetPricesByAsset(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{"status": "success", "message": "Prices found", "data": prices})
+}
+
+func GetPricesWithinDateRange(c *fiber.Ctx) error {
+    db := database.DB
+    var prices []model.Price
+    var asset model.Asset
+    
+    symbol := c.Params("assetSymbol")
+    startDate := c.Params("startDate")
+    endDate := c.Params("endDate")
+
+    db.Find(&asset, "symbol = ?", symbol)
+    if asset.ID == 0 {
+		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Asset not found", "data": nil})
+    }
+
+    if startDate == "" {
+        if endDate == "" {
+            db.Find(&prices, "asset_id = ?", asset.ID)
+        } else {
+            db.Where("datetime < ?", endDate).Find(&prices, "asset_id = ?", asset.ID)
+        }
+    } else {
+        if endDate == "" {
+            db.Where("datetime >= ?", startDate).Find(&prices, "asset_id = ?", asset.ID)
+        } else {
+            db.Where("datetime >= ? AND datetime < ?", startDate, endDate).Find(&prices, "asset_id = ?", asset.ID)
+        }
+    }
+
+	if len(prices) == 0 {
+		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "Prices for this date range not found", "data": nil})
+	}
+
+    return c.JSON(fiber.Map{"status": "success", "message": "Found prices in this date range", "data": prices})
 }
 
 func UpdatePrice(c *fiber.Ctx) error {
