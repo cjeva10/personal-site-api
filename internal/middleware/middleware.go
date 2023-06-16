@@ -1,6 +1,7 @@
 package middleware
 
 import (
+    "fmt"
 	"time"
 
 	"git.chrisevanko.com/personal-site-api.git/database"
@@ -13,6 +14,7 @@ import (
 
 // check whether a given api key is valid
 func ValidateApiKey(c *fiber.Ctx, key string) (bool, error) {
+    fmt.Println(key)
     db := database.DB
     var apiKey model.ApiKey
 

@@ -1,8 +1,8 @@
 package assetRoutes
 
 import (
-    "github.com/gofiber/fiber/v2"
-    assetHandler "git.chrisevanko.com/personal-site-api.git/internal/handlers/asset"
+	assetHandler "git.chrisevanko.com/personal-site-api.git/internal/handlers/asset"
+	"github.com/gofiber/fiber/v2"
 )
 
 func SetupAssetRoutes(router fiber.Router) {

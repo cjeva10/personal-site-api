@@ -1,4 +1,4 @@
-package authHandler
+package middleware
 
 import (
     "time"
