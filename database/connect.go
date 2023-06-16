@@ -36,6 +36,8 @@ func ConnectDB() {
     DB.AutoMigrate(&model.Asset{})
     DB.AutoMigrate(&model.Price{})
     DB.AutoMigrate(&model.Exchange{})
+    DB.AutoMigrate(&model.User{})
+    DB.AutoMigrate(&model.ApiKey{})
 
     fmt.Println("Database Migrated")
 }

@@ -4,13 +4,15 @@ import (
 	"time"
 
 	"database/sql"
+
+	"github.com/google/uuid"
 )
 
 type Model struct {
 	ID        uint      `gorm:"primarykey"`
 	CreatedAt time.Time `gorm:"default:now()"`
 	UpdatedAt time.Time `gorm:"default:now()"`
-	DeletedAt sql.NullTime 
+	DeletedAt sql.NullTime
 }
 
 type Note struct {
@@ -31,8 +33,8 @@ type Price struct {
 	Model
 	AssetId    uint
 	ExchangeId uint
-	Datetime time.Time
-	Value    float64
+	Datetime   time.Time
+	Value      float64
 }
 
 type Exchange struct {
@@ -40,4 +42,17 @@ type Exchange struct {
 	Name   string // e.g. Uniswap V2
 	Symbol string // e.g. univ2
 	Type   string // e.g. dex
+}
+
+type User struct {
+	Model
+	Username string
+	Password string
+}
+
+type ApiKey struct {
+	Model
+	UserId   uint
+	Key      uuid.UUID `gorm:"type:uuid"`
+	Duration time.Duration
 }
