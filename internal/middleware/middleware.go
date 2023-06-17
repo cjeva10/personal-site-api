@@ -13,7 +13,6 @@ import (
 )
 
 var Middleware = keyauth.New(keyauth.Config{
-    KeyLookup: "header:key",
     Validator: ValidateApiKey,
 })
 
