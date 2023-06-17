@@ -10,8 +10,8 @@ func SetupPriceRoutes(router fiber.Router) {
 	price := router.Group("/price")
 
 	price.Use(middleware.Middleware)
-	price.Get("/", priceHandler.GetPrices)
 
+	price.Get("/", priceHandler.GetPrices)
 	price.Get("/:assetSymbol", priceHandler.GetPricesByAsset)
 	price.Get("/:assetSymbol/:startDate?to:endDate?", priceHandler.GetPricesWithinDateRange)
 
