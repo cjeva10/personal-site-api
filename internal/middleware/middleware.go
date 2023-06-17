@@ -12,6 +12,11 @@ import (
 	"github.com/google/uuid"
 )
 
+var Middleware = keyauth.New(keyauth.Config{
+    KeyLookup: "header:key",
+    Validator: ValidateApiKey,
+})
+
 // check whether a given api key is valid
 func ValidateApiKey(c *fiber.Ctx, key string) (bool, error) {
     fmt.Println(key)
